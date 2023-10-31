@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+ <head>
+  <title>Formulario</title>
+  <meta charset = "UTF-8"/>
+  <link rel ="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+ integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script>
+   function mascaraData(){
+
+   var data = document.getElementById('txtData').value;
+   if(data.length==2){
+    document.getElementById('txtData').value = data +'/';
+     }
+   else if (data.length==5){
+    document.getElementById('txtData').value = data +'/';
+   }
+}
+
+   function mascaraRg(){
+
+   var rg= document.getElementById('txtRg').value;
+   if(rg.length==2){
+    document.getElementById('txtRg').value = rg +'.';
+     }
+   else if (rg.length==6){
+    document.getElementById('txtRg').value = rg +'.';
+   }
+   else if (rg.length==9){
+    document.getElementById('txtRg').value = rg +'-';
+   }
+}
+
+   function mascaraTelefone(){
+
+   var telefone= document.getElementById('txtTelefone').value;
+   if(telefone.length==1){
+    document.getElementById('txtTelefone').value ='(' + telefone;
+     }
+   else if (telefone.length==3){
+    document.getElementById('txtTelefone').value = telefone +')';
+   }
+
+   else if (telefone.length==8){
+    document.getElementById('txtTelefone').value = telefone +'-';
+   }
+}
+
+   function mascaraCel(){
+
+   var celular= document.getElementById('txtCel').value;
+   if(celular.length==1){
+    document.getElementById('txtCel').value ='(' + celular;
+     }
+   else if (celular.length==3){
+    document.getElementById('txtCel').value = celular +')';
+   }
+   else if (celular.length==9){
+    document.getElementById('txtCel').value = celular +'-';
+   }
+}
+
+
+
+
+   function mascaraCpf(){
+   var cpf = document.getElementById('txtCpf').value;
+    if(cpf.length==3){
+     document.getElementById('txtCpf').value = cpf +'.';
+}
+    else if(cpf.length==7){
+     document.getElementById('txtCpf').value = cpf +'.';
+}
+    else if (cpf.length==11){
+     document.getElementById('txtCpf').value = cpf +'-';
+}    
+}  
+
+function checarEmail(){
+
+   var email= document.getElementById('txtEmail').value;
+   if(email==""||email.indexOf('@')==-1||email.indexOf('.')==-1){
+
+    alert("Por favor Insira um E-mail valido");
+
+}
+}
+
+function limpa_formulário_cep() {
+
+            document.getElementById('txtRua').value=("");
+            document.getElementById('txtBairro').value=("");
+            document.getElementById('txtCidade').value=("");
+            document.getElementById('txtUf').value=("");
+    }
+ function meu_callback(conteudo) {
+        if (!("erro" in conteudo)) {
+            //Atualiza os campos com os valores.
+            document.getElementById('txtRua').value=(conteudo.logradouro);
+            document.getElementById('txtBairro').value=(conteudo.bairro);
+            document.getElementById('txtCidade').value=(conteudo.localidade);
+            document.getElementById('txtUf').value=(conteudo.uf);
+
+        } 
+        else {
+
+            limpa_formulário_cep();
+            alert("CEP não encontrado.");
+        }
+    }
+
+ function mascaraCep(){
+   var cep = document.getElementById('txtCep').value;
+    if(cep.length==5){
+     document.getElementById('txtCep').value = cep +'-';
+}
+}
+ function pesquisacep(valor) {
+
+
+        var cep = valor.replace(/\D/g, '');
+
+
+        if (cep != "") {
+
+
+            var validacep = /^[0-9]{8}$/;
+
+
+            if(validacep.test(cep)) {
+
+                //Preenche os campos com "..." enquanto consulta webservice.
+                document.getElementById('txtRua').value="...";
+                document.getElementById('txtBairro').value="...";
+                document.getElementById('txtCidade').value="...";
+                document.getElementById('txtUf').value="...";
+
+
+
+                var script = document.createElement('script');
+
+
+                script.src = 'https://viacep.com.br/ws/'+ cep + '/json/?callback=meu_callback';
+
+
+                document.body.appendChild(script);
+
+            } 
+            else {
+
+                limpa_formulário_cep();
+                alert("Formato de CEP inválido.");
+            }
+        }
+        else {
+
+            limpa_formulário_cep();
+        }
+    };
+  </script>
+ </head>
+ <body>
+ <div class="container">
+  <h1>Cadastro</h1>
+  <hr />
+
+
+  <form method="get class "form-group">
+
+  <div class="row">
+
+
+  <div class ="col-md-6">
+   <div class="form-group">
+    Nome:<input type="text" class= "form-control" id="txtNome"  maxlength="10"/> 
+  </div>
+  <div class = "row">
+  <div class ="col-md-4">
+   <div class="form-group">
+    Data:<input type="text" class= "form-control" id="txtData" onkeypress="mascaraData()" maxlength="10"/> 
+  </div>
+</div>
+</div>
+  <div class="row">
+  <div class ="col-md-6">
+  <div class="form-group">
+    CPF:<input type="text" class= "form-control" id ="txtCpf" onkeypress="mascaraCpf()" maxlength="14"/>
+
+  </div>
+  </div>
+  <div class ="col-md-6">
+  <div class="form-group">
+    RG:<input type="text" class= "form-control" id ="txtRg" onkeypress="mascaraRg()" maxlength="12"/>
+  </div>
+  </div>
+  </div>
+  <div class="form-group">
+    Telefone:<input type="text" class= "form-control" id ="txtTelefone" onkeypress="mascaraTelefone()" maxlength="13"/>
+  </div>
+
+  <div class="form-group">
+    Celular:<input type="text" class= "form-control" id ="txtCel" onkeypress="mascaraCel()" maxlength="14"/>
+  </div>
+
+<div class="form-group">
+    Cep:<input type="text" class= "form-control" id ="txtCep" onblur="pesquisacep(this.value)" onkeypress="mascaraCep()"/>
+  </div>
+
+<div class="form-group">
+    Cidade:<input type="text" class= "form-control" id ="txtCidade"/>
+  </div>
+
+<div class="form-group">
+    Bairro:<input type="text" class= "form-control" id ="txtBairro"/>
+  </div>
+
+<div class="form-group">
+    Rua:<input type="text" class= "form-control" id ="txtRua"/>
+  </div>
+
+<div class="form-group">
+    Uf:<input type="text" class= "form-control" id ="txtUf"/>
+  </div>
+
+  <div class="form-group">
+    Email:<input type="text" class= "form-control" id ="txtEmail" onblur="checarEmail();"/>
+  </div>
+
+  <div class="form-group">
+   Selecione
+   <select class ="form-control">
+    <option></option>
+    <option>opção 1</option>
+    <option>opção 2</option>
+    <option>opção 3</option>
+    <option>opção 4</option>
+   </select>
+  </div>
+
+  <input type="button" class="btn btn-primary"
+  value="enviar"/>
+  </div>
+  <div class="col-md-6">
+  </div>
+</div>
+
+</form>
+</div>
+</body>
+</html>
+
+<html>
+<body>
+<br>
+<img src="GIPHY - Seja animado_files/HALLOWEEN_2023_BANNER_HP_v03.gif" alt="Computer man" style="width: 900px;height:200px;">
+ <br>
+</body>
+</html>
+
